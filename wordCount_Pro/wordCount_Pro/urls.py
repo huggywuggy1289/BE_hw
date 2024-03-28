@@ -24,4 +24,5 @@ urlpatterns = [
     path('wordCount/', views.wordCount, name="wordCount"), # wordCount사이트 경로를 만들고 views파일에서 이름이 wordCount인 함수를 실행한다. 라고 명령
     path('result/', views.result, name="result"), # result사이트 경로를 만들고 views파일에서 이름이 result인 함수를 실행한다. 라고 명령
     # path('result/', views.result1, name="result1" )
+    path('hello/', views.hello, name="hello"),
 ]

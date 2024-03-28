@@ -7,6 +7,9 @@ def index(request):
 def wordCount(request):
     return render(request, "wordCount.html")
 
+def hello(request):
+    return render(request, "hello.html")
+
 def result(request):
     entered_text = request.GET['fulltext'] #요청(request)가 들어오면 fulltext를 가져와라
     word_list = entered_text.split() #entered_text를 공백기준으로 문자열을 나누겠다.
