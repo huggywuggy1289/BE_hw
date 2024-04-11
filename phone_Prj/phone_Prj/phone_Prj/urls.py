@@ -15,12 +15,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from contacts import views
-
+from django.urls import path, include
+# from contacts import views
+# url('A',include('B.urls')) 는 ~A 인 url들은 B 어플리케이션 안에 있는 urls.py를 참고하라는 말과 같다.
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.list, name = 'list'), #일반 8000포트에도 줘야함
-    path('', views.search, name = 'search'), #일반 8000포트에도 줘야함
-    path('search/', views.search, name = 'search'),
+    path('', include('contacts.urls')), #contacts 내부의 urls.py를 참조하라는 의미
 ]
