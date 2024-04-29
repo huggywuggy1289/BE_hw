@@ -7,19 +7,19 @@
   </head>
   <body>
     <h1><b>덕멋 인스타그램</b></h1>
+    <p><a href="{% url 'create' %}">글 작성하기</a></p>
     <form action="{% url 'result' %}" method="get">
       <input type="name" name="result" size="30" value="" />
-      <button type="submit">검색</button>
+      <button type="submit">검색</button><p>
     </form>
-
-    {% for Post in posts %}
-    <h2>{{ Post.title }}</h2>
-    <p>{{ Post.contents }}</p>
-    <p>{{ Post.created_at }}</p>
     <hr />
 
-    {% empty %}
-    <p>검색된 글이 없습니다.</p>
-    {% endfor %}
+    {% for post in posts %}
+    <h3><a href="{% url 'detail' post.id %}">{{ post.title }}</a></h3>
+    <p>내용 - {{ post.contents }}</p>
+    <p>조회수 - {{ post.views }}</p>
+    <p>작성일 - {{ post.created_at }}</p>
+    {% empty %} 작성된 글이 없습니다. {% endfor %}
+  </p>
   </body>
 </html>
