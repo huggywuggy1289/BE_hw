@@ -24,7 +24,7 @@ def create(request):
         # = 왼쪽에 있는 변수는
         title = request.POST.get('title')
         contents = request.POST.get('contents')
-        views = request.POST.get('views')
+        views = request.POST.get('views', 0)
 
         if title and contents:  # title과 contents가 모두 비어있지 않은 경우에만 객체 생성
             post = Post.objects.create(
