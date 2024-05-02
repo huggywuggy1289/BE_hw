@@ -1,0 +1,23 @@
+<!-- phone/detail.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>자세히</title>
+  </head>
+  <body>
+    <h1>연락처 상세조회</h1>
+    {% if phone %}
+    <h2>이름: {{ phone.name }}</h2>
+    <p>번호: {{ phone.phone_num }}</p>
+    <p>이메일: {{ phone.email }}</p>
+    <p>생성 날짜: {{ phone.created_at }}</p>
+    {% else %}
+    <p>전화번호가 없습니다.</p>
+    {% endif %}
+    <hr />
+    <br />
+    <p><a href="{% url 'list' %}">연락처 목록으로 돌아가기</a></p>
+  </body>
+</html>

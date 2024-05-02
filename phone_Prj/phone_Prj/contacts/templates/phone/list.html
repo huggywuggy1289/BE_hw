@@ -3,21 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>연락처 목록</title>
   </head>
   <body>
-    <form action="{% url 'search' %}" method="get">
-      <input type="name" name="search" size="10" value="" />
-      <button type="submit">확인</button>
-    </form>
+    <h1>연락처 목록</h1>
+    <hr />
+    {% if Phones %}
+    <ul>
+      {% for phone in Phones %}
+      <li>
+        <a href="{% url 'detail' phone.id %}"
+          >{{ phone.name }}: {{ phone.phone_num }}</a
+        >
+        <a href="{% url 'update' phone.id %}">수정</a>
+        <a href="{% url 'delete_confirm' phone.id %}">삭제</a>
+        <!-- 수정된 부분 -->
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>등록된 연락처가 없습니다.</p>
+    {% endif %}
 
-    {% for Phone in Phones %}
-    <h2>{{ Phone.name }}</h2>
-    <p>{{ Phone.phone_num }}</p>
-    <p>{{ Phone.email }}</p>
-
-    {% empty %}
-    <p>전화번호가 없습니다.</p>
-    {% endfor %}
+    <p><a href="{% url 'create' %}">새 번호 추가</a></p>
   </body>
 </html>
