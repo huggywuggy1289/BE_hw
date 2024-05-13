@@ -15,10 +15,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from BlogApp import views
+from django.urls import path, include
 
+#lionblog
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.list, name='list'),
+    path('', include('BlogApp.urls')),
+    # accounts앱 하위의 모든 url은 8000포트의 /accounts/~로 시작한다는 뜻
+    path('accounts/', include('accounts.urls'))
 ]
