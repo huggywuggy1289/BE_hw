@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    {% load humanize %} {% if not post.is_anonymous %}
+    <h2>제목 - {{ post.title }}</h2>
+    <p>내용 - {{ post.content }}</p>
+    <p>작성일 - {{ post.created_at|naturaltime }}</p>
+    {% else %}
+    <p>제목 - 익명 작성</p>
+    <p>내용 - 익명 작성</p>
+    <p>작성일 - {{ post.created_at|naturaltime }}</p>
+    {% endif %}
+    <hr />
+    <br />
+    <a href="{% url 'post:update' post.id %}">수정하기</a><br />
+    <a href="{% url 'post:delete' post.id %}">삭제하기</a><br />
+    <a href="{% url 'post:list' %}">홈으로</a>
+  </body>
+</html>
