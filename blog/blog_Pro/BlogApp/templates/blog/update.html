@@ -7,7 +7,7 @@
   </head>
   <body>
     <h1>글 수정</h1>
-    <form method="POST" action="{% url 'BlogApp:update' post.id %}">
+    <form method="POST" action="{% url 'post:update' post.id %}">
       {% csrf_token %} 제목 -
       <input type="text" value="{{ post.title }}" name="title" /><br /><br />
       내용 - <textarea name="content" value="{{ post.content }}"></textarea
