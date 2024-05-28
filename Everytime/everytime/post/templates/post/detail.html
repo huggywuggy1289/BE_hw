@@ -10,13 +10,65 @@
     <h2>제목 - {{ post.title }}</h2>
     <p>내용 - {{ post.content }}</p>
     <p>작성일 - {{ post.created_at|naturaltime }}</p>
+    <br />
+    <p>{{ post.author }}</p>
+    <p>
+      좋아요 - {{post.like.count}} {% if request.user in post.like.all %}
+      <a href="{% url 'post:remove-like' post.id %}">좋아요 취소</a>
+      {% else %}
+      <a href="{% url 'post:add-like' post.id %}">좋아요</a>
+      {% endif %}
+    </p>
     {% else %}
-    <p>제목 - 익명 작성</p>
-    <p>내용 - 익명 작성</p>
+    <h2>익명</h2>
+    <p>내용 - {{ post.content }}</p>
     <p>작성일 - {{ post.created_at|naturaltime }}</p>
+    <br />
+    <p>익명</p>
+    <p>
+      좋아요 - {{post.like.count}} {% if request.user in post.like.all %}
+      <a href="{% url 'post:remove-like' post.id %}">좋아요 취소</a>
+      {% else %}
+      <a href="{% url 'post:add-like' post.id %}">좋아요</a>
+      {% endif %}
+    </p>
     {% endif %}
+
+    <hr />
+
+    <!-- 댓글 작성란 -->
+    <p><b>댓글 수: </b> {{ post.comments.count }}</p>
+    {% for comment in post.comments.all %}
+    <p>
+      작성자 - {% if comment.is_anonymous %}익명 -- {{ comment.content }}
+      <br />
+      작성일 - {{ comment.created_at|naturaltime }}
+    </p>
+    <p>
+      {% else %} {{ comment.author }} -- {{ comment.content }}
+      <br />
+      작성일 - {{ comment.created_at|naturaltime }}
+    </p>
+    <br />
+    {% endif %} {% empty %}
+    <p>댓글이 없습니다.</p>
+    {% endfor %}
+
+    <br />
     <hr />
     <br />
+
+    <form method="POST" action="{% url 'post:create-comment' post.id %}">
+      {% csrf_token %} 댓글 - <input type="text" name="content" />
+      <input type="submit" value="작성" />
+      <label>
+        <input type="checkbox" name="is_anonymous" id="anonymous" /> 익명
+      </label>
+    </form>
+
+    <hr />
+    <br />
+
     <a href="{% url 'post:update' post.id %}">수정하기</a><br />
     <a href="{% url 'post:delete' post.id %}">삭제하기</a><br />
     <a href="{% url 'post:list' %}">홈으로</a>

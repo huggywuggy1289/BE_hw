@@ -37,16 +37,18 @@
     {% for post in posts %}
     {% if not post.is_anonymous %}
     <h3><a href="{% url 'post:detail' post.id %}">{{ post.title }}</a></h3>
-    <p>제목 - {{ post.title }}</p>
     <p>내용 - {{ post.content }}</p>
     <p>작성일 - {{ post.created_at|naturaltime }}</p>
+    <p>댓글 {{post.comments.count}} 개 공감 {{post.like.count}} 개 </p>
     {% else %}
-    <p><a href="{% url 'post:detail' post.id %}"><b>익명 작성</b></a></p>
-    <p>제목 - 익명 작성</p>
-    <p>내용 - 익명 작성</p>
+    <hr>
+    <p><a href="{% url 'post:detail' post.id %}"><b>익명</b></a></p>
+    <p>내용 - {{ post.content }}</p>
     <p>작성일 - {{ post.created_at|naturaltime }}</p>
+    <p>댓글 {{post.comments.count}} 개 공감 {{post.like.count}} 개 </p>
     {% endif %}
     {% empty %} 작성된 글이 없습니다. {% endfor %}
+    <hr>
   </p>
   </body>
 </html>
