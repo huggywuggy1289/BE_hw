@@ -19,7 +19,7 @@ from django.urls import path, include
 
 #lionblog
 urlpatterns = [
-    # path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('', include('post.urls')),
     # accounts앱 하위의 모든 url은 8000포트의 /accounts/~로 시작한다는 뜻
     path('accounts/', include('accounts.urls'))

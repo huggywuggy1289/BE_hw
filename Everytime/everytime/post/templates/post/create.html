@@ -7,9 +7,18 @@
   </head>
   <body>
     <h2>글 작성</h2>
-    <form method="POST" action="{% url 'post:create' %}">
+    <form method="POST" action="{% url 'post:create' category.slug %}">
       {% csrf_token %} 제목 - <input type="text" name="title" /><br /><br />
       내용 - <textarea name="content"></textarea><br /><br />
+
+      <!-- 카테고리 선택 드롭다운 메뉴 -->
+      <form>
+      <label for="category">카테고리:</label><br />
+      <select id="category" name="category">
+        {% for category in categories %}
+        <option value="{{ category.slug }}">{{ category.name }}</option>
+        {% endfor %}</select
+      ><br /><br />
       <input type="submit" value="작성하기" />
     </form>
   </body>

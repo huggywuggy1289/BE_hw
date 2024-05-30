@@ -4,10 +4,16 @@ from user.models import User #  user폴더안에 User모델
 from django.db.models import Q
 
 class Category(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=50, unique=True)
+    slug = models.SlugField(max_length=50, unique=True, blank = True, null = True)
 
     def __str__(self):
         return f'{self.name}'
+
+# class CategoryAdmin(admin.ModelAdmin):
+#     prepoulated_fields = {'slug':('title',)}
+    
+# admin.site.register(Category, CategoryAdmin)
 
 class Post(models.Model):
     title = models.CharField(max_length = 50)

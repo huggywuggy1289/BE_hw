@@ -5,12 +5,14 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def list(request):
+    categories = Category.objects.all()
     posts = Post.objects.all().order_by('-id')
-    return render(request, "post/list.html", {'posts': posts})
+    return render(request, "post/list.html", {'posts': posts, 'categories': categories})
 #blog/index.html에서 posts 변수명으로 사용할 수 있도록
 
 @login_required
-def create(request):
+def create(request, slug):
+    # categories = Category.objects.all()
     if request.method == "POST": # 사용자의 요청이 POST인지 확인
 
         # post(데이터명) 데이터에서 title과 content 값을 추출
@@ -20,6 +22,7 @@ def create(request):
         created_at = request.POST.get('created_at')
         is_anonymous = request.POST.get('is_anonymous') == 'on'
         # views = request.POST.get('views')
+        category = Category.objects.get(slug=slug)
 
         post = Post.objects.create(
             title = title, # 여기 = 오른쪽에 있는 변수와 일치
@@ -27,9 +30,11 @@ def create(request):
             created_at = created_at,
             is_anonymous = is_anonymous,
             author = request.user, # 추가
+            category = category
             # views = views,
         )
-        return redirect('post:list') # list.html인 urls로 이동한다는 의미
+
+        return redirect('post:list', slug) # list.html인 urls로 이동한다는 의미
     return render(request, 'post/create.html')
 
 def detail(request, id):

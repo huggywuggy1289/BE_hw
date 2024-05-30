@@ -7,40 +7,29 @@
   </head>
   <body>
     {% load humanize %}
-
-    <!-- <a href="{% url 'post:create' %}">글 작성하기</a>
-
-    <hr />
-    {% for post in posts %}
-    <h3><a href="{% url 'post:detail' post.id %}">{{ post.title }}</a></h3>
-    <p>내용 - {{ post.content }}</p>
-    <p>작성일 - {{ post.content }}</p>
-    {% empty %} 작성된 글이 없습니다. {% endfor %}
-    <hr /> -->
+    
     {% if request.user.is_authenticated %}
     <a href="{% url 'accounts:logout' %}">로그아웃</a>
+    <a href="{% url 'accounts:user-info' %}">마이페이지</a><br /><br />
     <hr />
+    <a href="{% url 'accounts:my-blog' %}">내가 작성한 글</a><hr>
+    
+    {% for category in categories %}
+    <a href="{% url 'post:create' category.slug %}">{{ category.name }}</a>
+    {% endfor %}
     {% else %}
     <a href="{% url 'accounts:signup' %}">회원가입</a>
     <a href="{% url 'accounts:login' %}">로그인</a><br /><br />
     {% endif %}
 
-    <form method="POST" action="{% url 'post:create' %}">
-      {% csrf_token %}
-      <label><input type="text" name="title" size="15" placeholder="이름"></label><br>
-      <textarea name="content" cols="30" rows="5" placeholder="내용"></textarea>
-      <label><input type="checkbox" name="is_anonymous" id="anonymous">익명</label><br>
-      <input type="submit" value="작성완료">
-    </form>
-
     <hr>
-    {% for post in posts %}
+    <!-- {% for post in posts %}
     {% if not post.is_anonymous %}
     <h3><a href="{% url 'post:detail' post.id %}">{{ post.title }}</a></h3>
     <p>내용 - {{ post.content }}</p>
     <p>작성일 - {{ post.created_at|naturaltime }}</p>
     <p>댓글 {{post.comments.count}} 개 공감 {{post.like.count}} 개 </p>
-    {% else %}
+    {% else %} -->
     <hr>
     <p><a href="{% url 'post:detail' post.id %}"><b>익명</b></a></p>
     <p>내용 - {{ post.content }}</p>
