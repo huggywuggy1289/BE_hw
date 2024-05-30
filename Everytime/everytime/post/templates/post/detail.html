@@ -14,9 +14,18 @@
     <p>{{ post.author }}</p>
     <p>
       좋아요 - {{post.like.count}} {% if request.user in post.like.all %}
-      <a href="{% url 'post:remove-like' post.id %}">좋아요 취소</a>
+      <form action="{% url 'post:remove-like' post.id %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit">취소</button>
+    </form><form action = "{% url 'post:scrap_post' post.id %}" method = "post">{% csrf_token %}
+    <button type ="submit">스크랩</button></form>
       {% else %}
-      <a href="{% url 'post:add-like' post.id %}">좋아요</a>
+      <form action="{% url 'post:add-like' post.id %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit">좋아요</button>
+    </form>
+    <form action = "{% url 'post:scrap_post' post.id %}" method = "post">{% csrf_token %}
+      <button type ="submit">스크랩</button></form>
       {% endif %}
     </p>
     {% else %}
@@ -26,10 +35,21 @@
     <br />
     <p>익명</p>
     <p>
-      좋아요 - {{post.like.count}} {% if request.user in post.like.all %}
-      <a href="{% url 'post:remove-like' post.id %}">좋아요 취소</a>
+      좋아요 - {{post.like.count}} {% if request.user in post.like.all %}<br>
+      <form action="{% url 'post:remove-like' post.id %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit">취소</button>
+    </form>
+    <form action = "{% url 'post:scrap_post' post.id %}" method = "post">
+      <button type ="submit">{% csrf_token %}스크랩</button></form>
       {% else %}
-      <a href="{% url 'post:add-like' post.id %}">좋아요</a>
+      <form action="{% url 'post:add-like' post.id %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit">좋아요</button>
+    </form>
+    <form action = "{% url 'post:scrap_post' post.id %}" method = "post">
+      {% csrf_token %}
+      <button type ="submit">스크랩</button></form>
       {% endif %}
     </p>
     {% endif %}

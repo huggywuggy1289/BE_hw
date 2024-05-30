@@ -10,8 +10,19 @@
     <form method="POST" action="{% url 'post:create' category.slug %}">
       {% csrf_token %} 제목 - <input type="text" name="title" /><br /><br />
       내용 - <textarea name="content"></textarea><br /><br />
+      카테고리 -
+      <select name="category" multiple>
+        <!-- 여러개 선택 가능 -->
+        {%for category in categories %}
+        <option value="{{ category.id }}">{{ category.name }}</option>
+        {% endfor %}
+      </select>
+      <br /><br />
+      <input type="submit" value="작성하기" />
+    </form>
+    <p>Category: {{ slug }}</p>
 
-      <!-- 카테고리 선택 드롭다운 메뉴 -->
+    <!-- 카테고리 선택 드롭다운 메뉴
       <form>
       <label for="category">카테고리:</label><br />
       <select id="category" name="category">
@@ -20,6 +31,6 @@
         {% endfor %}</select
       ><br /><br />
       <input type="submit" value="작성하기" />
-    </form>
+    </form> -->
   </body>
 </html>

@@ -1,5 +1,6 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Post, Comment, Category
+from .models import Post, Comment, Category, Scrap
 from django.db.models import F  # F 객체를 사용하여 조회수 증가
 from django.contrib.auth.decorators import login_required
 
@@ -15,8 +16,6 @@ def create(request, slug):
     # categories = Category.objects.all()
     if request.method == "POST": # 사용자의 요청이 POST인지 확인
 
-        # post(데이터명) 데이터에서 title과 content 값을 추출
-        # = 왼쪽에 있는 변수는
         title = request.POST.get('title')
         content = request.POST.get('content')
         created_at = request.POST.get('created_at')
@@ -88,3 +87,22 @@ def mylike(request):
     return render(request, 'accounts/myblog.html',{'posts': liked_posts})
 #redirect는 url 경로 name
 #render는 html경로라 템플릿안에 폴더 경로 입력해야함(get 요청된 페이지를 템플릿과 결합하여 반환한다.)
+
+@login_required
+def scrap_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    user = request.user
+
+    # 이미 스크랩한 게시글인지 확인
+    if Scrap.objects.filter(user=user, post=post).exists():
+        return JsonResponse({'status': 'error', 'message': '이미 스크랩한 게시글입니다.'}, status=400)
+
+    # 게시글 스크랩
+    Scrap.objects.create(user=user, post=post)
+
+    return JsonResponse({'status': 'success', 'message': '게시글을 스크랩했습니다.'}, status=200)
+
+@login_required
+def scrap_list(request):
+    scraps = Scrap.objects.filter(user=request.user).select_related('post')
+    return render(request, 'post/scrap.html', {'scraps': scraps})

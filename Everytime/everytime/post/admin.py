@@ -4,7 +4,7 @@ from .models import Category, Post, Comment, PostCategory, Like
 
 # Register your models here.
 class CategoryAdmin(admin.ModelAdmin):
-    prepoulated_fields = {'slug':('title',)}
+    prepopulated_fields = {'slug':('name',)}
     
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Post)

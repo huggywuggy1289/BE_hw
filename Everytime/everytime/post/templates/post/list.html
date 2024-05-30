@@ -12,7 +12,8 @@
     <a href="{% url 'accounts:logout' %}">로그아웃</a>
     <a href="{% url 'accounts:user-info' %}">마이페이지</a><br /><br />
     <hr />
-    <a href="{% url 'accounts:my-blog' %}">내가 작성한 글</a><hr>
+    <a href="{% url 'accounts:my-blog' %}">내가 작성한 글</a>
+    <a href="{% url 'post:scrap_list' %}">내가 스크랩한 글</a><hr>
     
     {% for category in categories %}
     <a href="{% url 'post:create' category.slug %}">{{ category.name }}</a>
@@ -30,14 +31,14 @@
     <p>작성일 - {{ post.created_at|naturaltime }}</p>
     <p>댓글 {{post.comments.count}} 개 공감 {{post.like.count}} 개 </p>
     {% else %} -->
-    <hr>
+    <!-- <hr>
     <p><a href="{% url 'post:detail' post.id %}"><b>익명</b></a></p>
     <p>내용 - {{ post.content }}</p>
     <p>작성일 - {{ post.created_at|naturaltime }}</p>
     <p>댓글 {{post.comments.count}} 개 공감 {{post.like.count}} 개 </p>
     {% endif %}
     {% empty %} 작성된 글이 없습니다. {% endfor %}
-    <hr>
+    <hr> -->
   </p>
   </body>
 </html>

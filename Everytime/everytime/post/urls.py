@@ -15,5 +15,7 @@ urlpatterns = [ #views.list 안해도 됨. 이미 from .views import list에서 
     # 다대다 좋아요 경로
     path('add-like/<int:post_id>/', add_like, name ="add-like"),
     path('remove-like/<int:post_id>/', remove_like, name ="remove-like"),
-    path('my-like', mylike, name = "my-like")
+    path('my-like', mylike, name = "my-like"),
+    path('scrap/<int:post_id>/', views.scrap_post, name='scrap_post'),
+    path('scrap/', views.scrap_list, name='scrap_list')
 ]
