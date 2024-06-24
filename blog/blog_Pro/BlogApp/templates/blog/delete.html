@@ -12,7 +12,7 @@
     {% if request.user == post.author %}
     <a href="{% url 'update' post.id %}">수정하기</a><br />
     <p>
-      <a href="{% url 'update' post.id %}">삭제하기</a>
+      <a href="{% url 'delete' post.id %}">삭제하기</a>
       {% endif %}
     </p>
   </body>

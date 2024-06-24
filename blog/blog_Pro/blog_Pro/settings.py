@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -118,7 +119,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -127,3 +128,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # 추가함. django 기본 user모델 대신 users앱의 모델을 사용자 인증모델로 사용할것이라고 알리기
 AUTH_USER_MODEL = 'users.user'
+
+# 정적 파일 경로 지정
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+
+# 이미지 파일(프로젝트 폴더 아래 media라는 이름의 폴더를 만들고 그안에 저장되도록 지정)
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")

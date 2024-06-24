@@ -16,6 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+# 미디어 파일 및 정적 경로 연결
+from django.conf import settings
+from django.conf.urls.static import static
 
 #lionblog
 urlpatterns = [
@@ -23,4 +26,6 @@ urlpatterns = [
     path('', include('BlogApp.urls')),
     # accounts앱 하위의 모든 url은 8000포트의 /accounts/~로 시작한다는 뜻
     path('accounts/', include('accounts.urls'))
-]
+    # 미디어 파일에 대한 url 제공
+    # + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

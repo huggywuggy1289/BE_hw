@@ -7,11 +7,26 @@
   </head>
   <body>
     <h1>글 수정</h1>
-    <form method="POST" action="{% url 'post:update' post.id %}">
+    <form
+      method="POST"
+      action="{% url 'BlogApp:update' post.id %}"
+      enctype="multipart/form-data"
+    >
       {% csrf_token %} 제목 -
       <input type="text" value="{{ post.title }}" name="title" /><br /><br />
       내용 - <textarea name="content" value="{{ post.content }}"></textarea
       ><br /><br />
+
+      {% if post.image %} 기존 이미지 :
+      <img width="320" height="240" src="{{ post.image.url }}" /><br /><br />
+      {% endif %} {% if post.video %}
+      <video width="320" height="240" controls>
+        <source src="{{ post.video.url }}" type="video/mp4" />
+        <br /><br />
+      </video>
+      {% endif %}<br /><br />
+      비디오 변경 - <input type="file" name="video" /><br /><br />
+
       <input type="submit" value="수정하기" />
     </form>
   </body>

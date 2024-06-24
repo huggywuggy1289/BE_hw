@@ -9,8 +9,23 @@
     <h2>제목 - {{ post.title }}</h2>
     <p>내용 - {{ post.content }}</p>
     <p>작성일 - {{ post.created_at }}</p>
-    <p>작성자 - {{ post.author.nickname }}</p>
+    <p>작성자 - {{ post.author }}</p>
+    <!-- 영상 & 이미지 -->
+    {% if post.image %}
+    <img width="320" height="240" src="{{ post.image.url }}" />
+    {% endif %} {% if post.video %}
+    <video width="320" height="240" controls>
+      <source src="{{ post.video.url }}" type="video/mp4" />
+    </video>
+    {% endif %}
 
+    <p>
+      좋아요 - {{post.like.count}} {% if request.user in post.like.all %}
+      <a href="{% url 'BlogApp:remove-like' post.id %}">좋아요 취소</a>
+      {% else %}
+      <a href="{% url 'BlogApp:add-like' post.id %}">좋아요</a>
+      {% endif %}
+    </p>
     <p>
       카테고리 - {%for category in post.category.all%} [{{category.name}}]
       {%empty%} 설정한 카테고리 없음 {%endfor%}
@@ -19,9 +34,8 @@
     <br />
 
     <p>댓글 수 : {{post.comments.count}}</p>
-    {% for comment in post.comments.all %} 작성자 - {{ comment.author.nickname
-    }}<br />
-    <b>{{ comment.content }}</b><br />
+    {% for comment in post.comments.all %} 작성자 - {{comment.author}}<br />
+    <b>{{ comment.content }}</b><br /><br />
     작성일 - {{ comment.created_at }}<br /><br />
     {%empty%} 댓글이 없습니다. {% endfor %}
     <br />
@@ -34,6 +48,7 @@
       />
     </form>
     <a href="{% url 'BlogApp:update' post.id %}">수정하기</a><br />
-    <a href="{% url 'BlogApp:delete' post.id %}">삭제하기</a>
+    <a href="{% url 'BlogApp:delete' post.id %}">삭제하기</a><br />
+    <a href="{% url 'BlogApp:list' %}">뒤로가기</a><br />
   </body>
 </html>
