@@ -55,7 +55,7 @@ def update(request, id):  # 이름(name) 대신 id를 받음
         phone.email = request.POST.get('email')
         phone.save()
         return redirect('detail', id=id)  # 템플릿 이름을 'blog/update.html'에서 'phone/detail.html'로 수정
-    return render(request, 'phone/update.html', {'phone': phone})  # 템플릿 이름을 'blog/update.html'에서 'phone/update.html'로 수정
+    return render(request, 'phone/update.html', {'phone': phone})
 
 
 

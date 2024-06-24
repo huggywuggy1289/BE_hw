@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from wordCountApp import views
+# from blog import views
 
 urlpatterns = [
     path('admin/', admin.site.urls), # admin사이트 주소 경로를 보여주고 이건 장고에서 제공하는 형식

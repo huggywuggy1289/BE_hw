@@ -19,9 +19,7 @@ def result(request):
 
 def create(request):
     if request.method == "POST":
-
         # post(데이터명) 데이터에서 title과 content 값을 추출
-        # = 왼쪽에 있는 변수는
         title = request.POST.get('title')
         contents = request.POST.get('contents')
         views = request.POST.get('views', 0)

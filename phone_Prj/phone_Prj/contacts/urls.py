@@ -5,7 +5,7 @@ from .views import list, create, detail, update, delete, result, delete_confirm
 
 urlpatterns = [
     path('', list, name='list'),
-    path('result/', result, name = 'result'),
+    # path('result/', result, name = 'result'),
     path('create/', create, name = "create"),
     path('detail/<int:id>/', detail, name = "detail"),
     path('update/<int:id>/', update, name = "update" ),
