@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    {% load static %}
+    <link href="{% static 'css/example.css' %}" rel="stylesheet" />
   </head>
   <body>
     {% load humanize %}
@@ -14,6 +16,7 @@
     <hr />
     <a href="{% url 'accounts:my-blog' %}">내가 작성한 글</a>
     <a href="{% url 'post:scrap_list' %}">내가 스크랩한 글</a><hr>
+    <a href="{% url 'post:created' %}">글 쓰기</a><hr>
     
     {% for category in categories %}
     <a href="{% url 'post:create' category.slug %}">{{ category.name }}</a>
@@ -24,21 +27,22 @@
     {% endif %}
 
     <hr>
-    <!-- {% for post in posts %}
+    {% for post in posts %}
     {% if not post.is_anonymous %}
     <h3><a href="{% url 'post:detail' post.id %}">{{ post.title }}</a></h3>
     <p>내용 - {{ post.content }}</p>
     <p>작성일 - {{ post.created_at|naturaltime }}</p>
     <p>댓글 {{post.comments.count}} 개 공감 {{post.like.count}} 개 </p>
-    {% else %} -->
-    <!-- <hr>
+    {% else %}
+    <hr>
     <p><a href="{% url 'post:detail' post.id %}"><b>익명</b></a></p>
     <p>내용 - {{ post.content }}</p>
     <p>작성일 - {{ post.created_at|naturaltime }}</p>
     <p>댓글 {{post.comments.count}} 개 공감 {{post.like.count}} 개 </p>
     {% endif %}
     {% empty %} 작성된 글이 없습니다. {% endfor %}
-    <hr> -->
+    <hr>
   </p>
   </body>
 </html>
+

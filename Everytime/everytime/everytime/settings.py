@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -128,4 +129,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # settings.py
 AUTH_USER_MODEL = 'user.User'
+
+# 정적 파일 경로 지정
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+
+# 이미지 파일(프로젝트 폴더 아래 media라는 이름의 폴더를 만들고 그안에 저장되도록 지정)
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 

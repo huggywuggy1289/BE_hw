@@ -12,29 +12,37 @@ def list(request):
 #blog/index.html에서 posts 변수명으로 사용할 수 있도록
 
 @login_required
-def create(request, slug):
-    # categories = Category.objects.all()
-    if request.method == "POST": # 사용자의 요청이 POST인지 확인
+def create(request, slug=None):
+    if slug:
+        category = get_object_or_404(Category, slug=slug)
+    else:
+        category = None
 
+    if request.method == "POST":
         title = request.POST.get('title')
         content = request.POST.get('content')
         created_at = request.POST.get('created_at')
         is_anonymous = request.POST.get('is_anonymous') == 'on'
-        # views = request.POST.get('views')
-        category = Category.objects.get(slug=slug)
+        video = request.FILES.get('video')
+        image = request.FILES.get('image')
 
         post = Post.objects.create(
-            title = title, # 여기 = 오른쪽에 있는 변수와 일치
-            content = content,
-            created_at = created_at,
-            is_anonymous = is_anonymous,
-            author = request.user, # 추가
-            category = category
-            # views = views,
+            title=title,
+            content=content,
+            created_at=created_at,
+            is_anonymous=is_anonymous,
+            author=request.user,
+            category=category,
+            image=image,
+            video=video,
         )
 
-        return redirect('post:list', slug) # list.html인 urls로 이동한다는 의미
-    return render(request, 'post/create.html')
+        return redirect('post:list')
+
+    context = {
+        'category': category,
+    }
+    return render(request, 'post/create.html', context)
 
 def detail(request, id):
     # Post 데이터를 데이터베이스에서 찾으면 가져오고 못찾으면 404 띄우기
@@ -49,6 +57,17 @@ def update(request, id):
         post.title = request.POST.get('title')
         post.content = request.POST.get('content')
         post.created_at = request.POST.get('created_at')
+        video = request.FILES.get('video')
+        image = request.FILES.get('image')
+
+        if video:
+            post.video.delete()
+            post.video = video
+        if image:
+            post.image.delete()
+            post.image = image
+
+
         post.save()
         return redirect('post:detail', id)
     return render(request, 'post/update.html', {'post' : post})

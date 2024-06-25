@@ -2,19 +2,29 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+      enctype="multipart/form-data"
+    />
     <title>Document</title>
   </head>
   <body>
     <h2>글 작성</h2>
-    <form method="POST" action="{% url 'post:create' category.slug %}">
+    <form
+      method="POST"
+      action="{% url 'post:create' category.slug %}"
+      enctype="multipart/form-data"
+    >
       {% csrf_token %} 제목 - <input type="text" name="title" /><br /><br />
       내용 - <textarea name="content"></textarea><br /><br />
+      동영상 - <input type="file" name="video" /><br /><br />
+      이미지 - <input type="file" name="image" /><br /><br />
       카테고리 -
       <select name="category" multiple>
         <!-- 여러개 선택 가능 -->
         {%for category in categories %}
-        <option value="{{ category.id }}">{{ category.name }}</option>
+        <a href="{% url 'post:create' category.slug %}">{{ category.name }}</a>
         {% endfor %}
       </select>
       <br /><br />

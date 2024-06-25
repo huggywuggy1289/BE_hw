@@ -1,11 +1,15 @@
 from django.urls import path
 from . import views
 from .views import list, create, detail, update, delete, create_comment, add_like, remove_like, mylike
+# 미디어 파일 및 정적 경로 연결
+from django.conf import settings
+from django.conf.urls.static import static
+
 #everytime
 app_name = 'post'
 urlpatterns = [ #views.list 안해도 됨. 이미 from .views import list에서 list함수 자체를 호출하고 있으므로
     path('', list, name="list"),
-    # path('create/', create, name = "create"),
+    path('create/', views.create, name = "created"),
     path('create/<slug:slug>/', views.create, name = "create"),
     path('detail/<int:id>/', detail, name = "detail"),
     path('update/<int:id>/', update, name = "update" ),
@@ -18,4 +22,4 @@ urlpatterns = [ #views.list 안해도 됨. 이미 from .views import list에서 
     path('my-like', mylike, name = "my-like"),
     path('scrap/<int:post_id>/', views.scrap_post, name='scrap_post'),
     path('scrap/', views.scrap_list, name='scrap_list')
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
